@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flashcard Registrierung</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+<nav class="navbar navbar-light bg-light custom-navbar">
+    <div class="container-fluid">
+        <form action="/startseite" method="get">
+            <a class="navbar-brand d-flex align-items-center" href="./startseite.html">
+                <input type="hidden" name="userId" th:value="${session.loggedInUserId}">
+                <button type="submit" style="background-color: white; color: black; border: white" class="btn btn-logo">Flashcard</button>
+            </a>
+        </form>
+    </div>
+</nav>
+
+<div class="page-container">
+
+    <h1 class="text-center">Flashcard Registrierung</h1>
+    <div class="centered-container">
+
+
+    <form action="/register" method="post" id="registerForm">
+
+        <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" id="username" name="username" placeholder="Username" pattern=".{4,12}" title="4 bis 12 Zeichen benötigt" required>
+            <span class="form-text text-muted">Hinweis: Der Username muss 4- 12 Stellen lang sein.</span>
+        </div>
+
+        <div class="mb-3">
+            <label for="email" class="form-label">E-Mail-Adresse</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="E-Mail-Adresse" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}" title="Geben Sie eine gültige E-Mail Adresse ein" required>
+        </div>
+
+        <div class="mb-3 position-relative">
+            <label for="password" class="form-label">Passwort</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Passwort" pattern="^(?=.[a-z])(?=.[A-Z])(?=.\d)[a-zA-Z\d-.,+]{8,12}$" title="8 bis 12 Zeichen aus Groß- und Kleinbuchstaben sowie einer Ziffer benötigt" required>
+            <span id="togglePassword" class="position-absolute top-50 end-0 me-3 cursor-pointerr">&#128065;</span>
+            <span class="form-text text-muted">Hinweis: Das Passwort muss 8- 12 Stellen lang sein und mindestens einen Großbuchstaben sowie eine Ziffer haben. Erlaubt sind Buchstaben, Ziffern und die Sonderzeichen: -.,+*</span>
+            <span id="passwordError" style="color: red; display: none;">Das Passwort muss 8-12 Stellen lang sein, mindestens einen Großbuchstaben und eine Ziffer enthalten. Erlaubte Sonderzeichen: -.,+*</span>
+        </div>
+
+
+        <div th:if="${errorMessage}">
+            <p th:text="${errorMessage}" style="color: red;"></p>
+        </div>
+
+        <div th:if="${successMessage}">
+            <p th:text="${successMessage}"></p>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            Registrieren
+        </button>
+
+
+    </form>
+
+    </div>
+
+</div>
+
+
+<script src="/Registrierung.js"></script>
+
+
+</body>
+</html>
+

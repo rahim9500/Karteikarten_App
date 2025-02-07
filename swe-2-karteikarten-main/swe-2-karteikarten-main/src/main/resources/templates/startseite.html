@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/style.css">
+    <title>Startseite</title>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-light bg-light custom-navbar">
+
+    <div class="container-fluid">
+
+        <form action="/startseite" method="get">
+
+            <div class="navbar-brand d-flex align-items-center">
+                <input type="hidden" name="userId" th:value="${session.loggedInUserId}">
+                <input type="hidden" id="usernamee" th:value="${session.usernamee}">
+                <button type="submit" style="background-color: white; color: black; border: white" class="btn btn-logo">Flashcard</button>
+            </div>
+
+        </form>
+
+        <div class="ms-auto">
+            <div id="loggedInUser" style="display: none;" th:text="${session.loggedInUser}"></div>
+            <div class="dropdown" th:if="${session.loggedInUser != null}">
+                <button class="btn btn-light dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-person-circle fs-2 ml-auto"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end text-center" aria-labelledby="userDropdown">
+                    <li>
+                        <a class="dropdown-item a" href="#">
+                            User: <span th:text="${session.loggedInUser}">username</span>
+                        </a>
+                    </li>
+                    <li>
+                        <button type="button" class="btn btn-danger mx-auto w-75" onclick="location.href='/logout'">
+                            Logout
+                        </button>
+                    </li>
+                </ul>
+            </div>
+            <a href="/showLogin" th:if="${session.loggedInUser == null}" class="btn btn-primary">Login</a>
+            <a href="/registration" th:if="${session.loggedInUser == null}" class="btn btn-secondary">Registrieren</a>
+        </div>
+    </div>
+
+</nav>
+
+
+
+<div class="toolbar">
+    <div th:if="${session.loggedInUser != null}" class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+        <!-- Suchbalken -->
+        <div class="btn-group me-2" role="group" aria-label="Search group">
+            <form id="searchForm" onsubmit="searchStacks(); return false;">
+                <div class="input-group search-bar-only ">
+                    <input type="text" id="searchInput" class="form-control " placeholder="Stacks suchen...">
+                    <select class="form-select" id="searchType">
+                        <option value="private">Eigene Stacks</option>
+                        <option value="public">Public Stacks</option>
+                    </select>
+                    <button class="btn btn-outline-secondary" type="submit">Suche</button>
+                </div>
+            </form>
+        </div>
+
+
+
+        <!-- Tags Auswählen -->
+        <div class="btn-group me-2" role="group" aria-label="Tags group">
+            <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Tag(s) auswählen
+            </button>
+            <ul class="dropdown-menu dropdown-menu-light" id="tagDropdown"></ul>
+        </div>
+
+
+            <div class="btn-group me-2" role="group" aria-label="Second group">
+                <input type="hidden" name="userId" th:value="${session.loggedInUserId}">
+                <button type="button" class="btn btn btn-light form-control" onclick="filterFlashcardsAndStacksByTags();">Filtern</button>
+            </div>
+
+
+            <form th:action="${session.loggedInUser != null ? '/TagVerwalten' : '/showLogin'}" method="get">
+
+                <div class="btn-group me-2" role="group" aria-label="Second group">
+                    <button type="submit" class="btn btn btn-light form-control">Tags verwalten</button>
+                </div>
+
+            </form>
+
+
+
+            <form th:action="${session.loggedInUser != null ? '/createFlashcardForm' : '/showLogin'}" method="get">
+
+                <div class="btn-group me-2" role="group" aria-label="Second group">
+                    <button type="submit" class="btn btn btn-success form-control">Flashcard erstellen</button>
+                </div>
+
+            </form>
+
+            <form th:action="${session.loggedInUser != null ? '/createStackForm' : '/showLogin'}" method="get">
+                <div class="btn-group me-2" role="group" aria-label="Third group">
+                    <button type="submit" class="btn btn-info form-control">Stack erstellen</button>
+                </div>
+
+            </form>
+
+            <div class="btn-group" role="group" aria-label="Third group">
+                <button type="button" id="deleteButton" class="btn btn-danger form-control" onclick="confirmDeletion();">Löschen</button>
+            </div>
+    </div>
+</div>
+
+
+
+<div th:if="${successMessage}" class="alert alert-success">
+    <p th:text="${successMessage}">Erfolgsmeldung</p>
+</div>
+
+<br>
+<br>
+
+<form id="delete-form" action="/deleteSelectedFlashcards" method="post">
+    <div id="mainContent">
+        <h2 th:if="${session.loggedInUser != null}">Flashcards
+            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#flashcardsCollapse" aria-expanded="false" aria-controls="flashcardsCollapse">
+                <i class="bi bi-arrow-down"></i>
+            </button>
+        </h2>
+        <div class="container-fluid" th:if="${session.loggedInUser != null}">
+            <div class="collapse" id="flashcardsCollapse">
+                <div class="row">
+                    <div th:each="flashcard : ${flashcards}" class="col-md-3">
+                        <div class="card text-center position-relative">
+                            <input type="checkbox" name="selectedCards" th:value="${flashcard.id}" class="form-check-input position-absolute top-0 end-0 mt-2 me-2 ">
+                            <div>
+                                <a th:href="@{/flashcard/{id}(id=${flashcard.id})}" class="btn btn-secondary form-control card-btn card-body flash" th:text="${flashcard.title}">Fallback Title</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<br>
+
+<h2 th:if="${session.loggedInUser != null}">Stacks
+    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#stacksCollapse" aria-expanded="false" aria-controls="stacksCollapse">
+        <i class="bi bi-arrow-down"></i>
+    </button>
+</h2>
+<div class="collapse" id="stacksCollapse">
+    <div class="stack-container" style="display: flex; flex-wrap: wrap;">
+        <div th:each="stack : ${stacks}" class="col-md-3" style="margin: 10px;">
+            <div class="card text-center position-relative" th:classappend="${stack.private ? '' : 'publicstack'}">
+                <input type="checkbox" name="selectedStacks" th:value="${stack.id}" class="form-check-input position-absolute top-0 end-0 mt-2 me-2">
+                <button type="button" class="btn btn-sm btn-primary position-absolute top-0 end-0 mt-2 me-4" th:data-id="${stack.id}" onclick="openEditStackModal(this.dataset.id)">
+                    <i class="bi bi-pencil-square"></i>
+                </button>
+                <a th:href="@{/stack/{id}(id=${stack.id})}" class="card-body btn btn-secondary publicstack">
+                    <h5 th:text="${stack.title}"></h5>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+
+<h2 id="publicStacksTitle" th:if="${session.loggedInUser != null}">Public Stacks
+    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#publicStacksCollapse" aria-expanded="false" aria-controls="publicStacksCollapse">
+        <i class="bi bi-arrow-down"></i>
+    </button>
+</h2>
+<div class="collapse" id="publicStacksCollapse">
+    <div th:if="${session.loggedInUser != null}" id="publicStacksContainer" class="stack-container" style="display: flex; flex-wrap: wrap;">
+        <div th:each="stack : ${publicStacks}" class="col-md-3" style="margin: 10px;">
+            <div class="card text-center position-relative publicstack">
+                <a th:href="@{/stack/{id}(id=${stack.id})}" class="card-body btn btn-secondary publicstack">
+                    <h5 th:text="${stack.title}">Stack Title</h5>
+                    <p class="author">Erstellt von: <span th:text="${stack['author']}">Author</span></p>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div id="searchResults" class="d-flex flex-wrap justify-content-start">
+</div>
+
+
+<div class="modal fade" id="editStackModal" tabindex="-1" aria-labelledby="editStackModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editStackModalLabel">Stack bearbeiten</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <ul id="editFlashcardList" class="list-group">
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Schließen</button>
+                <button type="button" class="btn btn-primary" id="saveEditedStackBtn">Auswahl speichern</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/startseite.js"></script>
+
+</body>
+</html>

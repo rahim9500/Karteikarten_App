@@ -1,0 +1,375 @@
+body {
+    background-color: #333;
+    margin: 0;
+    padding: 10px;
+    color: white;
+}
+.custom-navbar {
+    padding: 1px 0;
+}
+.navbar .btn{
+    font-size: 20px;
+}
+.btn.btn-tertiary.dropdown-toggle{
+    color: white;
+}
+.navbar-brand.d-flex.align-items-center{
+    padding-left: 15%;
+}
+.btn.btn-logo{
+    font-family: 'Pacifico', cursive;
+    font-size: 25px;
+    font-weight: bolder;
+}
+.body-div {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+.btn.btn-outline-dark {
+    color: white;
+    background-color: black;
+}
+btn.btn-outline{
+    background-color: white;
+    color: black;
+    border: white
+}
+
+.tagsuchen{
+    padding-left: 1%;
+}
+
+.toolbar {
+    display: flex;
+    justify-content: center; /* Zentriert horizontal */
+    align-items: center;
+    padding-top: 2%;
+
+}
+
+.publicstack {
+    background-color: lightskyblue;
+    color: white;
+    border: 2px solid #000;
+    border-radius: 15px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+.username{
+    font-size: 80%;
+    margin-top: 10px;
+    position: relative;
+}
+
+h5{
+    font-weight: bold;
+}
+
+
+.card {
+
+    color: black; /* Stellt sicher, dass der Text lesbar ist */
+    border: 1px solid #ccc; /* Einen subtilen Rand hinzufügen */
+    /* bestehende Stile beibehalten */
+    margin-bottom: 30px;
+    height: 200px;
+    padding-top: 25px;
+    padding-left: 1px;
+    padding-right: 1px;
+    padding-bottom: 1px;
+}
+
+.flash{
+    margin-bottom: 25%;
+    margin-left: 10%;
+
+}
+
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    color: black;
+    font-weight: bold;
+    font-size: large;
+    padding-top: 3%;
+    background-color: white;
+
+}
+
+.cards {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    margin: 30px auto;
+    text-align: center;
+    color: black;
+    transition: transform 0.5s;
+    transform-style: preserve-3d;
+}
+.card-btn {
+    width: 80%;
+    height: 95%;
+    text-align: center;
+
+
+}
+
+.card .form-check-input {
+    position: absolute;
+    margin-top: 2%;
+    top: 30%; /* Verschiebt die Checkbox zur Hälfte der Höhe des oberen Teils */
+    left: 50%; /* Zentriert sie horizontal */
+    transform: translate(-50%, -80%);
+    width: 20%; /* Erhöhte Breite */
+    height: 10%; /* Erhöhte Höhe */
+    cursor: pointer; /* Ändert den Cursor beim Hover */
+}
+
+/* Stil für die umschließenden Container anpassen, um Platz für Checkbox zu machen */
+.card-body {
+    padding-top: 30px; /* Erhöht den oberen Abstand, um Platz für die zentrierte Checkbox zu schaffen */
+}
+
+
+.tags{
+    position: relative;
+    text-align: center;
+}
+
+.cards.flipped {
+    transform: rotateY(180deg);
+}
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&family=VT323&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+}
+.view {
+    background: #333;
+    text-align: center;
+    color: #fff;
+}
+
+
+section {
+    perspective: 900px;
+}
+
+.front, .back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: white;
+    border-radius: 8px;
+    border: 2px solid #fff;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.back {
+    color: black;
+    transform: rotateY(180deg);
+    backface-visibility: hidden;
+}
+
+.success{
+    background-color: darkgreen;
+}
+
+.section {
+    perspective: 900px;
+}
+
+
+
+
+
+.navbar .bi-person-circle {
+    margin-right: 5px;
+}
+
+.ms-auto{
+    padding-right: -2%;
+}
+
+
+
+
+.cursor-pointer {
+    cursor: pointer;
+    padding-top: 8%;
+}
+
+.cursor-pointerr {
+    cursor: pointer;
+    padding-bottom: 3%;
+}
+
+.start{
+    padding-top: 2%;
+    padding-right: 20%;
+    margin-top: 4%;
+    margin-left: 40%;
+}
+
+
+
+.centered-container {
+    background-color: #000;
+    color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    max-width: 420px;
+    width: 100%;
+
+}
+.page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+#togglePassword {
+    position: absolute;
+    top: 5%;
+    transform: translateY(-128%);
+    right: 0;
+    cursor: pointer;
+}
+
+input[type="checkbox"] {
+    width: 1em;
+    height: 1em;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+
+}
+input[type="checkbox"]:checked {
+    background-color: red;
+    box-shadow: 0 0 5px red;
+    border-color: red;
+}
+input[type="checkbox"]:not(:checked) {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    border-color: white;
+}
+
+
+/* Tag verwalten */
+
+* {
+    box-sizing: border-box;
+}
+
+.tagtext {
+    color: black;
+}
+.leftcolumn {
+    float: left;
+    width: 60%;
+    min-height: 100vh;
+}
+
+
+.rightcolumn {
+    float: left;
+    width: 40%;
+    padding-left: 5px;
+}
+
+
+.tagcard {
+    background-color: white;
+    padding: 15px;
+    margin: 15px;
+    border-radius: 10px;
+
+}
+.tagcardleft {
+    background-color: white;
+    padding: 70px;
+    margin: 15px;
+    border-radius: 10px;
+    text-align: center;
+
+}
+
+
+.row::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+.tagsuchen{
+    align-self: center ;
+}
+
+#tagsList {
+    display: block;
+    margin-top: 10px;
+}
+
+
+#tagsList ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#tagsList li {
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+@media screen and (max-width: 800px) {
+    .leftcolumn, .rightcolumn {
+        width: 100%;
+        padding: 0;
+    }
+}
+
+#deleteTagForm .dropdown, #deleteTagForm .btn-danger {
+    height: 38px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+
+#deleteTagForm .btn-danger {
+    position: relative;
+    top: 12px;
+}
+
+.btn-secondary{
+    background-color: gray;
+}
+.modal-content{
+    background-color: black;
+}
+
+.search-results-container {
+    display: none;  // Standardmäßig verborgen
+width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.title-button-container {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 10px; /* Optional: Adds some space between the title and the button */
+}
+
+
